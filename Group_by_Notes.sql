@@ -103,3 +103,24 @@ SELECT
     ROUND(STDDEV(fare), 2) AS standard_deviation_in_fare
 FROM passengers
 GROUP BY sex, class;
+
+
+-- Extra query's 
+
+select *
+from properties_2017
+
+join (
+			select parcelid, max(logerror) as logerror, max(transactiondate) as transactiondate
+			from predictions_2017
+			group by parcelid
+		) as pred_17
+	using(parcelid)
+left join airconditioningtype using(airconditioningtypeid)
+left join architecturalstyletype using(architecturalstyletypeid)
+left join buildingclasstype using(buildingclasstypeid)
+left join heatingorsystemtype using(heatingorsystemtypeid)
+left join storytype using(storytypeid)
+left join typeconstructiontype using(typeconstructiontypeid)
+
+where year(transactiondate) = 2017
